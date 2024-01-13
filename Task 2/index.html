@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do List</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="container">
+    <h1>To-Do List</h1>
+
+    <div>
+      <input type="text" id="taskInput" placeholder="Add a new task">
+      <input type="date" id="deadlineInput">
+      <button id="addTaskBtn" onclick="addTask()">Add Task</button>
+    </div>
+
+    <ul id="taskList">
+      <!-- Tasks -->
+    </ul>
+  </div>
+
+  <script>
+    function addTask() {
+      const taskInput = document.getElementById('taskInput');
+      const deadlineInput = document.getElementById('deadlineInput');
+      const taskList = document.getElementById('taskList');
+
+      if (taskInput.value.trim() === '' || deadlineInput.value === '') {
+        alert('Please enter a task and select a deadline.');
+        return;
+      }
+
+      const task = document.createElement('li');
+      task.classList.add('task');
+      task.innerHTML = `
+        <span>${taskInput.value}</span>
+        <span>Deadline: ${deadlineInput.value}</span>
+        <div>
+          <button onclick="completeTask(this)">Complete</button>
+          <button onclick="removeTask(this)">Remove</button>
+        </div>
+      `;
+
+      taskList.appendChild(task);
+      taskInput.value = '';
+      deadlineInput.value = '';
+    }
+
+    function completeTask(button) {
+      const task = button.closest('.task');
+      task.classList.toggle('completed');
+    }
+
+    function removeTask(button) {
+      const task = button.closest('.task');
+      task.remove();
+    }
+  </script>
+
+</body>
+</html>
